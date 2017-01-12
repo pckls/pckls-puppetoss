@@ -1,9 +1,9 @@
 # Manages puppet-server similar to Puppet Enterprise LTS 2016.4
 class puppetoss::lts_2016::puppetserver (
-  $enable_ca       = true,
-  $proxy_ca        = false,
-  $puppetdb_config = false,
-  $serveralias     = 'puppet.example.org',
+  $enable_ca       = $puppetoss::puppetserver_enable_ca,
+  $proxy_ca        = $puppetoss::puppetserver_proxy_ca,
+  $puppetdb_config = $puppetoss::puppetserver_puppetdb_config,
+  $serveralias     = $puppetoss::puppetserver_serveralias,
   $version         = '2.6.0',
 ) {
 
@@ -15,7 +15,7 @@ class puppetoss::lts_2016::puppetserver (
   }
 
   if $puppetdb_config {
-    include puppetdb::master::config
+    contain ::puppetdb::master::config
   }
 
   # Service is defined in puppetdb::master::config
